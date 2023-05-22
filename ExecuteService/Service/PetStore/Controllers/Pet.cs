@@ -12,7 +12,7 @@ namespace ExecuteService.Service.PetStore.Controllers
 
         public Pet()
         {
-            Client("https://petstore.swagger.io/#/");
+            Client("https://petstore.swagger.io/v2");
         }
 
         private RestClient Client(string urlBase)
