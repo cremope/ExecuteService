@@ -1,9 +1,6 @@
-﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ExecuteService.Models.PetStore.Controllers;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace ExecuteService.Service.PetStore.Controllers
 {
@@ -18,33 +15,39 @@ namespace ExecuteService.Service.PetStore.Controllers
             Client("https://petstore.swagger.io/#/");
         }
 
-        public RestClient Client(string urlBase)
+        private RestClient Client(string urlBase)
         {
             client = new RestClient(urlBase);
             return client;
         }
 
-        public RestRequest Endpoint(string path)
+        private RestRequest Endpoint(string path)
         {
             endpoint = new RestRequest(path);
             return endpoint;
         }
 
-        public void Method(Method method)
+        private void Method(Method method)
         {
             endpoint.Method = method;
         }
 
-        public RestResponse Execute()
+        private void Request(object body)
+        {
+            endpoint.AddParameter("application/json", JsonConvert.SerializeObject(body), ParameterType.RequestBody);
+        }
+
+        private RestResponse Execute()
         {
             response = client.Execute(endpoint);
             return response;
         }
 
-        public RestResponse Post_Pet()
+        public RestResponse Post_Pet(PetRequest request)
         {
             Endpoint("/pet");
             Method(RestSharp.Method.Post);
+            Request(request);
             return Execute();
         }
     }
