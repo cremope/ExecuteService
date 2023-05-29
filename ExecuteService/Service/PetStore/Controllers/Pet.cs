@@ -1,54 +1,39 @@
 ﻿using ExecuteService.Models.PetStore.Controllers;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace ExecuteService.Service.PetStore.Controllers
 {
     public class Pet
     {
-        private RestClient client;
-        private RestRequest endpoint;
-        private RestResponse response;
-
+        private string BASEURL = "https://petstore.swagger.io/v2";
         public Pet()
         {
-            Client("https://petstore.swagger.io/v2");
         }
 
-        private RestClient Client(string urlBase)
+        public RestResponse Post_Pet(PetRequest request, Method metodo)
         {
-            client = new RestClient(urlBase);
-            return client;
+            Utils.Client(BASEURL);
+            Utils.Endpoint("/pet");
+            Utils.Method(metodo);
+            Utils.Request(request);
+            return Utils.Execute();
         }
 
-        private RestRequest Endpoint(string path)
+        public RestResponse Get_Pet(object id, Method metodo)
         {
-            endpoint = new RestRequest(path);
-            return endpoint;
+            Utils.Client(BASEURL);
+            Utils.Endpoint($"/pet/{id}");
+            Utils.Method(metodo);
+            return Utils.Execute();
         }
 
-        private void Method(Method method)
+        public RestResponse Delete_Pet(object id, Method metodo)
         {
-            endpoint.Method = method;
-        }
-
-        private void Request(object body)
-        {
-            endpoint.AddParameter("application/json", JsonConvert.SerializeObject(body), ParameterType.RequestBody);
-        }
-
-        private RestResponse Execute()
-        {
-            response = client.Execute(endpoint);
-            return response;
-        }
-
-        public RestResponse Post_Pet(PetRequest request)
-        {
-            Endpoint("/pet");
-            Method(RestSharp.Method.Post);
-            Request(request);
-            return Execute();
+            Utils.Client(BASEURL);
+            Utils.Endpoint($"/pet/{id}");
+            Utils.Header_ApiKey();
+            Utils.Method(metodo);
+            return Utils.Execute();
         }
     }
 }
