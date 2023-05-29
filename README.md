@@ -4,7 +4,7 @@ Repositório que contém a centralização das chamadas dos endpoints, onde qual
 # Processo criação de nuget
 Essa versão ainda não gera pacote nuget no site https://www.nuget.org/
 
-# Processo de uso do PrbServicesPB
+# Processo de uso do ExecuteService
  1. Clonar o projeto através da [Url](https://github.com/cremope/ExecuteService.git)
  2. Referenciar a dll no projeto consumidor - Recomendado quando o desenvolvimento anda em conjunto com o projeto que está referenciando a dll.
 
